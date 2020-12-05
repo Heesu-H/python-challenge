@@ -13,7 +13,8 @@ def PyBank(csvfilepath):
     sum_changes = 0
     greatest_profit = 867884
     i = 0
-   
+    changes_dates = 0
+  
 
 
 
@@ -48,26 +49,29 @@ def PyBank(csvfilepath):
         average_change = round(sum_changes/int(len(changes)),2)
 
         # finding greatest profit
-        for value in values:
-            if greatest_profit <= int(value):
+        for value in changes:
+            if greatest_profit < int(value):
                 greatest_profit = int(value)
                 if int(value) == last_value:
                     break
-                
-
-           
-
-                
-                
+        for value in changes:
+            if int(value) == greatest_profit:
+                changes_index = changes.index(value) 
+                print(changes_index)
+        for row in csv_reader:
+            
+            
             
 
-        
+          
+
     print(f"row count       {row_count}")
     print(f"net total       {net_total}")
     print(f"Average Change  {average_change}") 
     print(f"changes         {len(changes)}")
     print(f"greatest profit {greatest_profit}")
     print(f"last value      {last_value}")
-    print(values)
+    
+
 
 PyBank(os.path.join("Resources","budget_data.csv"))
