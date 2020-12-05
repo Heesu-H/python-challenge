@@ -11,11 +11,13 @@ def PyBank(csvfilepath):
     csv_filepath = csvfilepath
     with open(csv_filepath,'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter = ",")
+        cvsheader = next(csv_reader)
         for row in csv_reader:
-            next.csv_reader(row)
             if row != "":
                 row_count += 1    
                 net_total += int(row[1])
+        print(row_count)
+        print(net_total)
 
 PyBank(os.path.join("Resources","budget_data.csv"))
 
