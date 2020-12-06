@@ -70,9 +70,16 @@ def PyBank(csvfilepath):
             if int(value) == greatest_loss:
                 changes_index_l = changes.index(value)+ 1 
                 print(f"# of changes {changes_index_l}")
-                
-            
-          
+
+    output_file_location = os.path.join("analysis","Financial_Analysis.txt")
+    with open(output_file_location,'w') as output_file:
+        csv_writer = csv.writer(output_file, delimiter = ",")
+        csv_writer.writerow([f"Total months:                 {row_count} months"]) 
+        csv_writer.writerow([f"Total:                        ${net_total}"])
+        csv_writer.writerow([f"Average change:               ${average_change}"]) 
+        csv_writer.writerow([f"Greatest increase in profits: {dates[changes_index_g]} (${greatest_profit})"]) 
+        csv_writer.writerow([f"Greatest decrease in profits: {dates[changes_index_l]} (${greatest_loss})"])
+
 
     print(f"row count                   {row_count}")
     print(f"net total                   {net_total}")
@@ -84,5 +91,5 @@ def PyBank(csvfilepath):
     print(f"greatest decrease in profit {greatest_loss}")
     print(f"date of greatest loss       {dates[changes_index_l]}")
 
-
+#run function; pybank
 PyBank(os.path.join("Resources","budget_data.csv"))
