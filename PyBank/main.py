@@ -74,6 +74,8 @@ def PyBank(csvfilepath):
     output_file_location = os.path.join("analysis","Financial_Analysis.txt")
     with open(output_file_location,'w') as output_file:
         csv_writer = csv.writer(output_file, delimiter = ",")
+        csv_writer.writerow([f"Financial Analysis"]) 
+        csv_writer.writerow([f"_________________________________________________"]) 
         csv_writer.writerow([f"Total months:                 {row_count} months"]) 
         csv_writer.writerow([f"Total:                        ${net_total}"])
         csv_writer.writerow([f"Average change:               ${average_change}"]) 
