@@ -7,14 +7,15 @@ def PyPoll(electiondata_filelocation):
 
     list_candidates = []
     filtered = []
-    k_votes = []
+    
     k_total = 0
-    c_votes = []
-    c_total= 0
-    l_votes = []
+    c_total= 0   
     l_total = 0
-    o_votes = []
     o_total = 0
+    each_total = []
+    percent = []
+    most = 0
+    
     total_votes = 0
 
 
@@ -40,21 +41,65 @@ def PyPoll(electiondata_filelocation):
         #counting total number of votes for each candidate
         for votes in list_candidates:
             if votes == filtered[0]:
-                k_votes.append(votes)
                 k_total +=1
             if votes == filtered[1]:
-                c_votes.append(votes)
                 c_total+=1
             if votes == filtered[2]:
-                l_votes.append(votes) 
                 l_total+=1
             if votes == filtered[3]:
                 o_total+=1
-                o_votes.append(votes)
+        #solution to append multiple value at one time
+        #found at https://stackoverflow.com/questions/20196159/how-to-append-multiple-values-to-a-list-in-python
+        each_total.extend((k_total,c_total,l_total,o_total))
+        
 
-    print(k_total,c_total,l_total,o_total)
+        #percentage of votes
+        k_percent = round((k_total/total_votes)*100,3)
+        c_percent = round((c_total/total_votes)*100,3)
+        l_percent = round((l_total/total_votes)*100,3)
+        o_percent = round((o_total/total_votes)*100,3)
+        percent.extend((k_percent,c_percent,l_percent,o_percent))
 
+        #solution to put two lists into dictionaries 
+        #found at https://stackoverflow.com/questions/7271385/how-do-i-combine-two-lists-into-a-dictionary-in-python
+        name_and_total = dict(zip(filtered,each_total))
+        name_percent_total = zip(filtered,percent,each_total)
+
+        for i in each_total:
+            if most < i:
+                most = i 
+                index_most = each_total.index(most)
+        #solution to find key from value
+        #found at https://stackoverflow.com/questions/8023306/get-key-by-value-in-dictionary
+        for name,vote in name_and_total.items():
+            if vote == most:
+                popular_vote = name
+
+
+    print(f"Total votes: {total_votes}")
+    print(f"Khan {k_total}      Correy {c_total}    Li {l_total}    O'Tooley {o_total}")
+    print(f"Khan {k_percent}      Correy {c_percent}    Li {l_percent}    O'Tooley {o_percent}")
     print(filtered)
+    print(each_total)
+    print(most)
+    print(index_most)
+    print(popular_vote)
+    print(f"{popular_vote} won majority with a total of {most} votes.")
+
+    output_file = os.path.join("analysis","Election_results.txt")
+
+    with open(output_file,'w') as txtfile:
+        csvwriter= csv.writer(txtfile,delimiter = ",")
+
+        csvwriter.writerow(["Election Results"])
+        csvwriter.writerow(["_____________________________"])
+        csvwriter.writerow([f"Total votes: {total_votes}"])
+        csvwriter.writerow(["_____________________________"])
+        csvwriter.writerow([f"Total votes: {total_votes}"])
+        csvwriter.writerow(name_percent_total)
+        csvwriter.writerow(["_____________________________"])
+        csvwriter.writerow([f"Winner: {popular_vote}"])
+        csvwriter.writerow(["_____________________________"])
 
 
 
@@ -62,10 +107,6 @@ def PyPoll(electiondata_filelocation):
 #def list_to_dict(x):
   #return list( dict.fromkeys(x) )
     
-
-
-
-
 
 
 
