@@ -31,9 +31,11 @@ def PyPoll(electiondata_filelocation):
                 total_votes +=1
                 list_candidates.append(row[2])
         
+        #filter out duplicates to get names of candidates
         for candidate in list_candidates:
             if candidate not in filtered:
                 filtered.append(candidate)
+        
         #or can conver list to dict and back to list. found at https://www.w3schools.com/python/python_howto_remove_duplicates.asp
         #candidates = list_to_dict(list_candidates)
     #print(candidates)
@@ -83,12 +85,11 @@ def PyPoll(electiondata_filelocation):
 
     print(f"Total votes: {total_votes}")
     print(f"Khan {k_total}      Correy {c_total}    Li {l_total}    O'Tooley {o_total}")  
-    print(each_total)
-    print(most)
-    print(index_most)
-    print(popular_vote)
+    print(f"Greatest amount of votes {most}")
+    print(f"Position of value in list of votes {index_most}")
+    print(f"Popular vote: {popular_vote}")
     print(f"{popular_vote} won majority with a total of {most} votes.")
-    print(filtered)
+    print(f"Candidates {filtered}")
 
     output_file = os.path.join("analysis","Election_results.txt")
 
