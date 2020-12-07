@@ -60,11 +60,16 @@ def PyPoll(electiondata_filelocation):
         o_percent = round((o_total/total_votes)*100,3)
         percent.extend((k_percent,c_percent,l_percent,o_percent))
 
-        #solution to put two lists into dictionaries 
+        #solution to put two lists into dictionaries so we can 
+        #find the name corresponding to the most amount of votes 
         #found at https://stackoverflow.com/questions/7271385/how-do-i-combine-two-lists-into-a-dictionary-in-python
-        name_and_total = dict(zip(filtered,each_total))
-        name_percent_total = zip(filtered,percent,each_total)
+        zip_nt = list(zip(filtered,each_total))
+        #convert list to dictionary
+        name_and_total = dict(zip_nt)
 
+        
+
+        #finding most votes
         for i in each_total:
             if most < i:
                 most = i 
@@ -77,14 +82,13 @@ def PyPoll(electiondata_filelocation):
 
 
     print(f"Total votes: {total_votes}")
-    print(f"Khan {k_total}      Correy {c_total}    Li {l_total}    O'Tooley {o_total}")
-    print(f"Khan {k_percent}      Correy {c_percent}    Li {l_percent}    O'Tooley {o_percent}")
-    print(filtered)
+    print(f"Khan {k_total}      Correy {c_total}    Li {l_total}    O'Tooley {o_total}")  
     print(each_total)
     print(most)
     print(index_most)
     print(popular_vote)
     print(f"{popular_vote} won majority with a total of {most} votes.")
+    print(filtered)
 
     output_file = os.path.join("analysis","Election_results.txt")
 
@@ -95,8 +99,11 @@ def PyPoll(electiondata_filelocation):
         csvwriter.writerow(["_____________________________"])
         csvwriter.writerow([f"Total votes: {total_votes}"])
         csvwriter.writerow(["_____________________________"])
-        csvwriter.writerow([f"Total votes: {total_votes}"])
-        csvwriter.writerow(name_percent_total)
+        #uneven spacing to make txt columns to line up 
+        csvwriter.writerow([f"{filtered[0]}         {percent[0]}%   {each_total[0]} votes"])
+        csvwriter.writerow([f"{filtered[1]}       {percent[1]}%   {each_total[1]}  votes"])
+        csvwriter.writerow([f"{filtered[2]}           {percent[2]}%   {each_total[2]}  votes"])
+        csvwriter.writerow([f"{filtered[3]}     {percent[3]}%    {each_total[3]}  votes"])
         csvwriter.writerow(["_____________________________"])
         csvwriter.writerow([f"Winner: {popular_vote}"])
         csvwriter.writerow(["_____________________________"])
